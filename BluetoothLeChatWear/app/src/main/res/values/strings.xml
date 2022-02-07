@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">BlutoothLeChatWear</string>
+    <!--
+    This string is used for square devices and overridden by hello_world in
+    values-round/strings.xml for round devices.
+    -->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="no_devices_found">No BLE devices found</string>
+    <string name="device_list_title">Pair with new device</string>
+    <string name="location_required_error">The location permission is required</string>
+    <string name="grant_permission_prompt">Grant Location Permission</string>
+    <string name="active_scan_message">Scanning for devices</string>
+    <string name="bt_not_enabled">Please enable Bluetooth</string>
+    <string name="enable_bluetooth_prompt">Enable Bluetooth</string>
+    <string name="bt_ads_not_supported">Bluetooth Advertisements are not supported on this device</string>
+    <string name="chat_confirm_message">Would you like to chat with %1$s</string>
+    <string name="chat_deny_button">No</string>
+    <string name="chat_confirm_button">Yes</string>
+    <string name="no_connected_device_message">Not connected to a device</string>
+    <string name="connect_device_prompt">Connect</string>
+    <string name="send_message_button">Send</string>
+    <string name="chatting_with_device">Chatting with %1$s</string>
+    <string name="your_device_address">You:</string>
+    <string name="scanning_header">Choose:</string>
+    <string name="start">START</string>
+    <string name="stop">STOP</string>
+</resources>
