@@ -1,8 +1,8 @@
 # BLE_Send_data
  저전력 블루투스를 이용하여 워치의 센서데이터(중력, 자이로, 선형가속도)를 실시간으로 스마트폰에 전송하는 어플리케이션
  
-// 태그 형식
 <img src="https://user-images.githubusercontent.com/72744190/152900083-30c372e9-0b20-4219-9ce1-342bb1e625fc.png"  width="150" height="150">
+
 <img src="https://user-images.githubusercontent.com/72744190/152900070-28243c3d-5e9f-4d1d-9e0f-e9a0965cdc03.jpg"  width="200" height="400">
 
 # 사용방법
