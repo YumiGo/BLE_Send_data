@@ -11,7 +11,7 @@
 - 워치에는 BluetoothLeChat을, 워치에는 BluetoothLeChatWear를 설치한다.
 
 [ 스마트폰 ]
-- 블루투스가 꺼져 았는 경우 'ENABLE BLUETOOTH' 버튼을 눌러 블루투스를 활성화 한다.
+- 블루투스가 꺼져 있는 경우 'ENABLE BLUETOOTH' 버튼을 눌러 블루투스를 활성화 한다.
 - 'CONNECT WITH NEARBY DEVICES' 버튼을 눌러 BLE 기기를 스캔한다.
 
 [ 워치 ]
