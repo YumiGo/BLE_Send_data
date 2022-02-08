@@ -215,16 +215,15 @@ class BluetoothChatFragment : Fragment(), SensorEventListener {
                     output_gy += message
                     ++i
                 }
-                queue.add(output_gy)
+                queue.add(output_gy) // 한 세트 큐에 넣음
                 Handler().postDelayed({
-                    if(queue.peek()!=null){
-                        System.out.println("큐: " + queue.peek())
-                        output = queue.peek()
-                        ChatServer.sendMessage(output) // 보낼게 있으면 보냄
-                        // 맨 앞 데이터 삭제하기
-                        queue.poll()
+                    if(queue.peek()!=null){ // 큐에 보낼 게 있으면
+                        System.out.println("큐: " + queue.peek()) // 디버깅용 출력
+                        output = queue.peek() // output 스트링에 큐 맨 앞에 꺼 복사
+                        ChatServer.sendMessage(output) // output 보냄
+                        queue.poll() // 맨 앞 데이터 삭제
                     }
-                }, 200)
+                }, 200)// 딜레이 0.2초
 
             }
             Sensor.TYPE_GRAVITY -> {
