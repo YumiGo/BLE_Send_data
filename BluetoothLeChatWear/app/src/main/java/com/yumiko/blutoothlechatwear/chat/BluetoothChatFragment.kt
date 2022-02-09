@@ -61,7 +61,6 @@ class BluetoothChatFragment : Fragment(), SensorEventListener {
     private var output_grav = ""
     private var time: String? = null
     private var date = Date(System.currentTimeMillis())
-    //private var read: Boolean = true
 
     /*Queue*/
     private var queue: Queue<String> = LinkedList<String>() // 큐 선언하기
@@ -116,7 +115,7 @@ class BluetoothChatFragment : Fragment(), SensorEventListener {
     }
     override fun onStart() {
         super.onStart()
-        sensor1 = manager.getDefaultSensor(Sensor.TYPE_GRAVITY) // 보정되지 않은 가속도계 센서
+        sensor1 = manager.getDefaultSensor(Sensor.TYPE_GRAVITY)
         sensor2 = manager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION)
         sensor3 = manager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
 
