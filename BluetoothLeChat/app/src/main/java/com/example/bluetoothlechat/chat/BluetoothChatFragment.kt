@@ -36,6 +36,7 @@ import com.example.bluetoothlechat.databinding.FragmentBluetoothChatBinding
 import com.example.bluetoothlechat.gone
 import com.example.bluetoothlechat.visible
 import java.io.*
+import java.lang.reflect.InvocationTargetException
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -53,6 +54,8 @@ class BluetoothChatFragment : Fragment() {
     private var output: String? = ""
     private var time: String? = null
     private var date = Date(System.currentTimeMillis())
+    private var filename = ""
+    private var outputStream: PrintWriter? = null
 
     private val deviceConnectionObserver = Observer<DeviceConnectionState> { state ->
         when(state) {
@@ -86,14 +89,30 @@ class BluetoothChatFragment : Fragment() {
     //자기가 보낸 메세지, 받은 메세지를 모두 처리한다.
     private val messageObserver = Observer<Message> { message ->
         Log.d(TAG, "Have message ${message.text}")
-        if(message.text.contains("TEST")){ // 테스트용 토스트 메세지
-            Toast.makeText(context, message.text, Toast.LENGTH_SHORT).show();
-        }
-        else if(message.text.contains("TAG")){
-            output += ("[" + message.text + "]")
-        }
-        else{
-            output += ( message.text ) // 워치로부터 받은 데이터를 모두 output에 저장한다
+        when {
+            message.text.contains("TEST") -> { // 테스트용 토스트 메세지
+                Toast.makeText(context, message.text, Toast.LENGTH_SHORT).show();
+            }
+            message.text.contains("[START]") -> {
+                val pathFormat = SimpleDateFormat("yyyy-MM-dd HH-mm-ss-SSS", Locale.KOREA)
+                time = pathFormat.format(date)
+                filename = "$time.txt"
+                System.out.println("파일이름:$filename")
+                outputStream = PrintWriter(FileOutputStream(getAppDataFileFromExternalStorage(filename), true))
+            }
+            message.text.contains("TAG") -> {
+                output += ("[" + message.text + "]")
+                output?.let { it1 -> saveToExternalStorage(it1) }
+                output = "" // 초기화
+            }
+            else -> {
+                try{
+                    output?.let { it1 -> saveToExternalStorage(it1) } // output을 바로 파일에 쓴다
+                    output = "" // output 초기화
+                }catch (e: InvocationTargetException) {
+                    e.getTargetException().printStackTrace(); //getTargetException
+                }
+            }
         }
     }
 
@@ -211,16 +230,10 @@ class BluetoothChatFragment : Fragment() {
             // 저장 버튼을 누르면
             when{
                 !isExternalStorageWritable() -> Toast.makeText(context,"외부 저장장치 없음", Toast.LENGTH_LONG).show()
-
                 else -> {
-                    val pathFormat = SimpleDateFormat("yyyy-MM-dd HH-mm-ss-SSS", Locale.KOREA)
-                    time = pathFormat.format(date)
-                    val filename = time + ".txt"
-                    //외부저장소에 저장
-                    output?.let { it1 -> saveToExternalStorage(it1,filename) }
-                    System.out.println(output)
-                    Toast.makeText(context,"저장되엇읍니다",Toast.LENGTH_LONG).show()
-                    output = "" // 초기화
+                    Toast.makeText(context,"저장되었습니다",Toast.LENGTH_LONG).show()
+                    outputStream?.close()
+                    output = ""
                 }
             }
         }
@@ -250,10 +263,8 @@ class BluetoothChatFragment : Fragment() {
     }
 
     //외부 저장소에 데이터 저장
-    fun saveToExternalStorage(text: String, filename: String){
-        val fileOutputStream = FileOutputStream(getAppDataFileFromExternalStorage(filename))
-        fileOutputStream.write(text.toByteArray())
-        fileOutputStream.close()
+    fun saveToExternalStorage(text: String){
+        outputStream?.print(text)
     }
     private fun showDisconnected() {
         hideKeyboard()
